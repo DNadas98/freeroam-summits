@@ -18,12 +18,12 @@ public class Controller {
     return "Hello from FreeRoamSummitsApplication protected route!";
   }
 
-  @GetMapping("hello")
+  @GetMapping("/public/hello")
   public String hello2() {
     return "Hello from FreeRoamSummitsApplication public route!";
   }
 
-  @GetMapping("trails")
+  @GetMapping("/public/trails")
   public Mono<String> trails() {
     return s2SAuthenticationService.getAccessToken().flatMap(token ->
       webClientBuilder.build()
