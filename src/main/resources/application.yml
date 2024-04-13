@@ -21,5 +21,4 @@ spring:
 
 logging:
   level:
-    root: debug
-    org.springframework.cloud: warn
+    root: warn

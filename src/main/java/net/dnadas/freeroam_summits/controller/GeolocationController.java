@@ -1,7 +1,7 @@
 package net.dnadas.freeroam_summits.controller;
 
 import lombok.RequiredArgsConstructor;
-import net.dnadas.freeroam_summits.dto.geolocation.GeoLocationResponseDto;
+import net.dnadas.freeroam_summits.dto.geolocation.DetailedGeoLocationDto;
 import net.dnadas.freeroam_summits.service.geolocation.GeoLocationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +15,9 @@ import reactor.core.publisher.Mono;
 public class GeolocationController {
   private final GeoLocationService geoLocationService;
 
-  @GetMapping("/elevation")
-  public Mono<GeoLocationResponseDto> getElevation(
-    @RequestParam("lat") Double lat, @RequestParam("lng") Double lng) {
-    return geoLocationService.getElevation(lat, lng);
+  @GetMapping("/details")
+  public Mono<DetailedGeoLocationDto> getElevation(
+    @RequestParam("latitude") Double lat, @RequestParam("longitude") Double lng) {
+    return geoLocationService.getGeoLocationDetails(lat, lng);
   }
 }

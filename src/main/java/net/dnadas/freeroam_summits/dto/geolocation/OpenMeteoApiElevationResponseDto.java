@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record ElevationApiResponseDto(@NotNull @NotEmpty List<Double> elevation) {
+public record OpenMeteoApiElevationResponseDto(@NotNull @NotEmpty List<Double> elevation) {
 }
