@@ -1,7 +1,7 @@
-package net.dnadas.freeroam_summits.service;
+package net.dnadas.freeroam_summits.service.security;
 
-import lombok.extern.log4j.Log4j2;
-import net.dnadas.freeroam_summits.dto.TokenResponseDto;
+import lombok.extern.slf4j.Slf4j;
+import net.dnadas.freeroam_summits.dto.security.TokenResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 import java.util.Base64;
 
 @Service
-@Log4j2
+@Slf4j
 public class S2SAuthenticationService {
   private final WebClient.Builder webClientBuilder;
   private final String clientId;

@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: ${PORT}
 
 eureka:
   instance:
@@ -21,4 +21,5 @@ spring:
 
 logging:
   level:
-    root: warn
+    root: debug
+    org.springframework.cloud: warn
