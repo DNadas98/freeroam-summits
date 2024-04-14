@@ -19,15 +19,19 @@ public class GeoLocationService {
   private final String ELEVATION_API_URL;
   private final String REVERSE_GEOCODING_API_URL;
   private static final int REVERSE_GEOCODING_MAX_ZOOM = 15;
+  private final String GEOCODING_AUTOCOMPLETE_API_URL;
   private final Validator validator;
 
   public GeoLocationService(
     @Qualifier("nonLoadBalancedWebClientBuilder") WebClient.Builder webClientBuilder,
     @Value("${ELEVATION_API_URL}") String elevationApiUrl,
-    @Value("${REVERSE_GEOCODING_API_URL}") String reverseGeocodingApiUrl, Validator validator) {
+    @Value("${REVERSE_GEOCODING_API_URL}") String reverseGeocodingApiUrl,
+    @Value("${GEOCODING_AUTOCOMPLETE_API_URL}") String autocompleteApiUrl,
+    Validator validator) {
     this.webClientBuilder = webClientBuilder;
     this.ELEVATION_API_URL = elevationApiUrl;
     REVERSE_GEOCODING_API_URL = reverseGeocodingApiUrl;
+    GEOCODING_AUTOCOMPLETE_API_URL = autocompleteApiUrl;
     this.validator = validator;
   }
 
@@ -47,6 +51,29 @@ public class GeoLocationService {
         );
       }
     );
+  }
+
+  public Mono<OpenMeteoApiAutoCompleteResponseDto> searchGeoLocations(String query) {
+    return webClientBuilder.build().get().uri(
+        GEOCODING_AUTOCOMPLETE_API_URL +
+          String.format("?name=%s&count=10&language=en&format=json", query))
+      .retrieve()
+      .onStatus(
+        HttpStatusCode::isError,
+        response -> response.bodyToMono(OpenMeteoApiErrorResponseDto.class)
+          .flatMap(responseDto -> Mono.error(
+            new LocationUnavailableException(responseDto.reason(), response.statusCode().value())))
+      )
+      .bodyToMono(OpenMeteoApiAutoCompleteResponseDto.class)
+      .handle((responseDto, sink) -> {
+        var violations = validator.validate(responseDto);
+        if (!violations.isEmpty()) {
+          log.error("Validation failed for OpenMeteoApiAutoCompleteResponseDto: {}", violations);
+          sink.error(new LocationUnavailableException());
+        } else {
+          sink.next(responseDto);
+        }
+      });
   }
 
   private Mono<OpenMeteoApiElevationResponseDto> getElevation(Double latitude, Double longitude) {
