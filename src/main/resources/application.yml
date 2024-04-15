@@ -1,12 +1,12 @@
 server:
-  port: ${PORT}
+  port: ${FREEROAM_SUMMITS_PORT}
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${FREEROAM_EUREKA_HOSTNAME:localhost}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${FREEROAM_EUREKA_URL}
     register-with-eureka: true
     fetch-registry: true
 
@@ -17,7 +17,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${OAUTH2_KEYCLOAK_ISSUER_URI}
+          issuer-uri: ${FREEROAM_OAUTH2_KEYCLOAK_ISSUER_URI}
 
 logging:
   level:

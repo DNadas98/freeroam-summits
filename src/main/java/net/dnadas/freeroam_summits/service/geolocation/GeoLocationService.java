@@ -24,9 +24,9 @@ public class GeoLocationService {
 
   public GeoLocationService(
     @Qualifier("nonLoadBalancedWebClientBuilder") WebClient.Builder webClientBuilder,
-    @Value("${ELEVATION_API_URL}") String elevationApiUrl,
-    @Value("${REVERSE_GEOCODING_API_URL}") String reverseGeocodingApiUrl,
-    @Value("${GEOCODING_AUTOCOMPLETE_API_URL}") String autocompleteApiUrl,
+    @Value("${FREEROAM_SUMMITS_ELEVATION_API_URL}") String elevationApiUrl,
+    @Value("${FREEROAM_SUMMITS_REVERSE_GEOCODING_API_URL}") String reverseGeocodingApiUrl,
+    @Value("${FREEROAM_SUMMITS_GEOCODING_AUTOCOMPLETE_API_URL}") String autocompleteApiUrl,
     Validator validator) {
     this.webClientBuilder = webClientBuilder;
     this.ELEVATION_API_URL = elevationApiUrl;

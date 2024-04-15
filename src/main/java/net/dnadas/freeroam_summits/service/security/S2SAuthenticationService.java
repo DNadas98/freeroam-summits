@@ -22,8 +22,8 @@ public class S2SAuthenticationService {
   @Autowired
   public S2SAuthenticationService(
     @Qualifier("nonLoadBalancedWebClientBuilder") WebClient.Builder webClientBuilder,
-    @Value("${S2S-CLIENT-ID}") String clientId, @Value("${S2S-CLIENT-SECRET}") String clientSecret,
-    @Value("${S2S-TOKEN-URI}") String tokenUri) {
+    @Value("${FREEROAM_S2S-CLIENT-ID}") String clientId, @Value("${FREEROAM_S2S-CLIENT-SECRET}") String clientSecret,
+    @Value("${FREEROAM_S2S-TOKEN-URI}") String tokenUri) {
     this.webClientBuilder = webClientBuilder;
     this.clientId = clientId;
     this.clientSecret = clientSecret;
