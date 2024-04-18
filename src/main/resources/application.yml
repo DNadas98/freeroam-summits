@@ -18,7 +18,32 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${FREEROAM_OAUTH2_KEYCLOAK_ISSUER_URI}
+  datasource:
+    url: jdbc:postgresql://${FREEROAM_SUMMITS_DB_HOST}:${FREEROAM_SUMMITS_DB_PORT}/${FREEROAM_SUMMITS_DB_NAME}
+    username: ${FREEROAM_SUMMITS_DB_USER}
+    password: ${FREEROAM_SUMMITS_DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 250
+      minimum-idle: 5
+      idle-timeout: 500000
+      max-lifetime: 600000
+      connection-timeout: 30000
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          batch_size: 50
 
 logging:
   level:
     root: warn
+    org.hibernate.sql: info
+    org.springframework.transaction: info
+    org.springframework.dao: info

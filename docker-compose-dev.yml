@@ -1,0 +1,15 @@
+services:
+  freeroam_summits_db:
+    image: postgis/postgis:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${FREEROAM_SUMMITS_DB_NAME}"
+      POSTGRES_USER: "${FREEROAM_SUMMITS_DB_USER}"
+      POSTGRES_PASSWORD: "${FREEROAM_SUMMITS_DB_PASSWORD}"
+    ports:
+      - "${FREEROAM_SUMMITS_DB_PORT}:5432"
+    volumes:
+      - freeroam_summits_db_data:/var/lib/postgresql/data
+
+volumes:
+  freeroam_summits_db_data:
